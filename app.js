@@ -1,27 +1,29 @@
 const express = require('express');
-
+const hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 const app = express();
+
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
 
 app.use(express.static('public'));
 
-app.get('/', (request, response) => {
-  response.send('This is a page about Tāranātha, the Tibetan Jonang master');
-});
+app.locals.pageTitle = 'My homepage about Tāranātha';
 
 app.get('/home', (request, response) => {
-  response.sendFile(__dirname + '/views/home.html');
+  response.render('home');
 });
 
 app.get('/about', (request, response) => {
-  response.sendFile(__dirname + '/views/about.html');
+  response.render('about');
 });
 
 app.get('/works', (request, response) => {
-  response.sendFile(__dirname + '/views/works.html');
+  response.render('works');
 });
 
 app.get('/photogallery', (request, response) => {
-  response.sendFile(__dirname + '/views/photogallery.html');
+  response.render('photogallery');
 });
 
 app.listen(3000);
